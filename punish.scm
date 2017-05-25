@@ -110,8 +110,9 @@
         (l2 (get-last-2))
         (l3 (get-last-3)))
     (set-global-weight c (- (get-global-weight c) 1))
-    ;(set-weight c l3 (- (get-weight
-    ))
+    (set-weight c l3 (- (get-weight c l3) 10))
+    (set-weight c l2 (- (get-weight c l2) 6))
+    (set-weight c l1 (- (get-weight c l1) 3))))
   
 ;(set-global-weight "k53" 40)
 ;(set-weight "k3" '(k3 k5 k8) 15)
