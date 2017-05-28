@@ -72,7 +72,7 @@
     (close-output-port h)))
 ;;Rewrite weights to file
 (define (write-to-weight comm contents)
-  (let ((p (open-output-file (string-append weights-path comm) 'replace)))
+  (let ((p (open-output-file (string-append weights-path comm) #:exists 'replace)))
     (display "'" p)
     (write contents p)
     (close-output-port p)))
@@ -82,11 +82,11 @@
   (let ((weights (get-weights comm)))
     (letrec ((find-and-write (lambda (li)
                                (cond
-                                 ((equal? li '())
+                                 ((or (equal? li '()) (void? li))
                                   (display "In equal-new")
                                   (write-to-weight
                                    comm
-                                   (append weights (list (list where new-weight)))))
+                                   (list (list where new-weight))))
                                  ((equal? (caar li) where)
                                   (display "Appendin")
                                   (letrec ((find-insert (lambda (li newli)
@@ -119,7 +119,9 @@
 ;(get-global-weight "k53")
 ;(add-to-history "ham2")
 
-;(punish)
+;;TODO: Bug with managing weights that saves only last weght (line ca. 85)
+
+(punish)
 (get-global-weight "ham2")
 (get-history)
 (get-last-3)
